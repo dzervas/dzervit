@@ -1,0 +1,28 @@
+---
+
+name: test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Rust nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Test project
+        run: cargo test -v
+
+      - name: Generate coverage report
+        run: |
+          cargo install cargo-tarpaulin
+          cargo tarpaulin -v --coveralls ${{ secrets.COVERALLS_TOKEN }}

@@ -26,6 +26,7 @@ fn rocket() -> Rocket {
     rocket::ignite().mount("/api/v1/", routes![v1_api])
 }
 
+#[cfg(not(tarpaulin_include))]
 fn main() {
     rocket().launch();
 }
