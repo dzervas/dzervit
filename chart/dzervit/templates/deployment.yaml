@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dzervit-deploy
+spec:
+  replicas: 2
+  minReadySeconds: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dzervit
+  template:
+    metadata:
+      labels:
+        app: dzervit
+    spec:
+      containers:
+        - name: dzervit
+          image: ghcr.io/dzervas/dzervit:{{ $.Chart.AppVersion }}
+          resources:
+            requests:
+              cpu: 0.3
+              memory: 128M
+            limits:
+              cpu: 0.6
+              memory: 1G

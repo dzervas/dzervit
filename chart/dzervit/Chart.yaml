@@ -1,0 +1,12 @@
+apiVersion: v3
+name: dzervit
+description: SaaS to land the sickest burn on those who deserve a bad joke
+
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+maintainers:
+  - name: Dimitris Zervas
+    email: dzervas@dzervas.gr
+    url: https://dzerv.it

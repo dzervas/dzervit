@@ -1,0 +1,15 @@
+---
+{{- if .Values.use_ingressroute }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dzervit-ingress
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`dzerv.it`)
+    services:
+    - kind: Service
+      name: dzervit-deploy
+      port: 9000
+{{- end }}
