@@ -1,0 +1,56 @@
+---
+
+name: build
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get the version from the tag
+        run: echo "APP_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Login to GitHub
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_PAT }}
+
+      - name: Build and publish
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:${{ env.APP_VERSION }}
+
+  chart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: latest
+
+      - name: Package chart
+        run: helm package chart/dzervit -d publish
+
+      - name: Index repo
+        run: helm repo index publish --url ${{ github.repository_owner }}.github.com/${{ github.repository_name }} && mv index.yaml publish/
+
+      - name: Deploy to pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
+          publish_branch: charts
+          publish_dir: ./publish
+          force_orphan: true
