@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ "$#" -lt 1  ]; then
 	echo "Usage: $0 <old_version> [new_version|increment_strategy]"
 	exit 1

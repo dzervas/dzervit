@@ -14,9 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
       - name: Find last version from tag
-        run: echo "LAST_VERSION=$(git describe --tags --abbrev=0 || exit 1)" >> $GITHUB_ENV
+        run: echo "LAST_VERSION=$(git describe --tags --abbrev=0 | tail -c +2 || exit 1)" >> $GITHUB_ENV
       - name: Find new version
         run: echo "NEW_VERSION=$(.github/semver-increment.sh ${{ env.LAST_VERSION }} ${{ github.event.inputs.version }} || exit 1)" >> $GITHUB_ENV
 
@@ -25,12 +28,11 @@ jobs:
       - name: Bump Chart.yaml version
         run: 'sed -Ei "s/(^appVersion: ?)${{ env.LAST_VERSION }}/\1${{ env.NEW_VERSION }}/" chart/dzervit/Chart.yaml'
       - name: Commit changes
-        uses: github-actions-x/commit@v2.7
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          push-branch: main
-          commit-message: Bump version to ${{ env.NEW_VERSION }}
-          files: Cargo.toml chart/dzervit/Chart.yaml
+          branch: main
+          commit_message: Bump version to ${{ env.NEW_VERSION }}
+          tagging_message: "v${{ env.NEW_VERSION }}"
 
       - name: Create release
         uses: actions/create-release@v1
