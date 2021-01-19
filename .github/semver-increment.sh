@@ -11,8 +11,11 @@ export PATCH=$(echo -n "$OLD_VERSION" | sed -E "s/([0-9]+)\.([0-9]+)\.([0-9]+)/\
 
 if [[ "$2" == "major" ]]; then
 	MAJOR=$(($MAJOR + 1))
+	MINOR=0
+	PATCH=0
 elif [[ "$2" == "minor" ]]; then
 	MINOR=$(($MINOR + 1))
+	PATCH=0
 elif [[ "$2" == "patch" ]]; then
 	PATCH=$(($PATCH + 1))
 elif [ "$#" -lt 2  ]; then

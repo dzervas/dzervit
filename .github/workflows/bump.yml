@@ -15,8 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
           ref: ${{ github.head_ref }}
+          token: ${{ secrets.PACKAGES_PAT }}
+          fetch-depth: 0
 
       - name: Find last version from tag
         run: echo "LAST_VERSION=$(git describe --tags --abbrev=0 | tail -c +2 || exit 1)" >> $GITHUB_ENV
@@ -33,6 +34,9 @@ jobs:
           branch: main
           commit_message: Bump version to ${{ env.NEW_VERSION }}
           tagging_message: "v${{ env.NEW_VERSION }}"
+          # commit_author: Dimitris Zervas <dzervas@dzervas.gr>
+          # commit_user_name: Actions Bump
+          # commit_user_email: bump@github.com
 
       - name: Create release
         uses: actions/create-release@v1
