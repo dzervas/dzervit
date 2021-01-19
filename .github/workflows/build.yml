@@ -20,17 +20,17 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_PAT }}
+          password: ${{ secrets.PACKAGES_PAT }}
 
       - name: Build and publish
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          # platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}:${{ env.APP_VERSION }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ env.APP_VERSION }}
 
   chart:
     runs-on: ubuntu-latest
@@ -45,12 +45,11 @@ jobs:
         run: helm package chart/dzervit -d publish
 
       - name: Index repo
-        run: helm repo index publish --url ${{ github.repository_owner }}.github.com/${{ github.repository_name }} && mv index.yaml publish/
+        run: helm repo index publish --url ${{ github.repository_owner }}.github.com/${{ github.repository_name }}
 
       - name: Deploy to pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
-          publish_branch: charts
+          publish_branch: gh-pages
           publish_dir: ./publish
-          force_orphan: true

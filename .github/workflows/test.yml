@@ -22,7 +22,12 @@ jobs:
       - name: Test project
         run: cargo test -v
 
+      - name: Install Tarpaulin
+        uses: actions-rs/install@v0.1
+        if: github.ref == 'refs/heads/main'
+        with:
+          crate: cargo-tarpaulin
+          use-tool-cache: true
       - name: Generate coverage report
-        run: |
-          cargo install cargo-tarpaulin
-          cargo tarpaulin -v --coveralls ${{ secrets.COVERALLS_TOKEN }}
+        if: github.ref == 'refs/heads/main'
+        run: cargo tarpaulin -v --coveralls ${{ secrets.COVERALLS_TOKEN }}

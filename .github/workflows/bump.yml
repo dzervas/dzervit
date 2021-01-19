@@ -24,6 +24,13 @@ jobs:
         run: 'sed -Ei "s/(^version ?= ?)\"${{ env.LAST_VERSION }}\"/\1\"${{ env.NEW_VERSION }}\"/" Cargo.toml'
       - name: Bump Chart.yaml version
         run: 'sed -Ei "s/(^appVersion: ?)${{ env.LAST_VERSION }}/\1${{ env.NEW_VERSION }}/" chart/dzervit/Chart.yaml'
+      - name: Commit changes
+        uses: github-actions-x/commit@v2.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: main
+          commit-message: Bump version to ${{ env.NEW_VERSION }}
+          files: Cargo.toml chart/dzervit/Chart.yaml
 
       - name: Create release
         uses: actions/create-release@v1
