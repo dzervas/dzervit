@@ -45,7 +45,7 @@ jobs:
         run: helm package chart/dzervit -d publish
 
       - name: Index repo
-        run: helm repo index publish --url ${{ github.repository_owner }}.github.com/${{ github.event.repository.name }}
+        run: helm repo index publish --url https://${{ github.repository_owner }}.github.com/${{ github.event.repository.name }}
 
       - name: Deploy to pages
         uses: peaceiris/actions-gh-pages@v3
