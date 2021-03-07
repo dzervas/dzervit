@@ -1,6 +1,6 @@
 [package]
 name = "dzervit"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Dimitris Zervas <dzervas@dzervas.gr>"]
 edition = "2018"
 
