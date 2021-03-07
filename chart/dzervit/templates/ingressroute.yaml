@@ -1,5 +1,5 @@
 ---
-{{- if .Values.use_ingressroute }}
+{{- if .Values.ingressroute.enabled }}
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -7,9 +7,9 @@ metadata:
 spec:
   routes:
   - kind: Rule
-    match: Host(`dzerv.it`)
+    match: Host(`{{ .Values.ingressroute.host }}`)
     services:
     - kind: Service
       name: dzervit-deploy
-      port: 9000
+      port: 8000
 {{- end }}

@@ -1,1 +1,3 @@
-use_ingressroute: true
+ingressroute:
+  enabled: true
+  host: dzerv.it
