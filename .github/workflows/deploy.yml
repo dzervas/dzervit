@@ -1,0 +1,29 @@
+---
+
+name: deploy
+on:
+  deployment:
+  workflow_dispatch:
+  # push:
+  #   tags:
+  #     - v*
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 'Helm install'
+        uses: 'deliverybot/helm@master'
+        with:
+          release: dzervit
+          token: '${{ github.token }}'
+          namespace: dzervit
+          helm: helm3
+          values: >-
+            ingressroute:
+              host: dzerv.it
+          chart: 'chart/dzervit'
+        env:
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG_PROD }}'

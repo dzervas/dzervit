@@ -10,6 +10,6 @@ spec:
     match: Host(`{{ .Values.ingressroute.host }}`)
     services:
     - kind: Service
-      name: dzervit-deploy
+      name: dzervit-svc
       port: 8000
 {{- end }}
