@@ -5,6 +5,7 @@ extern crate rocket;
 
 use rocket::{Rocket, http::RawStr};
 use rocket_contrib::json::Json;
+use rocket_contrib::serve::StaticFiles;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
@@ -23,7 +24,10 @@ fn v1_api(target: Option<&RawStr>, item: Option<&RawStr>) -> Json<APIv1Res> {
 }
 
 fn rocket() -> Rocket {
-    rocket::ignite().mount("/api/v1/", routes![v1_api])
+    rocket::ignite()
+        .mount("/api/v1/", routes![v1_api])
+        // .mount("/", StaticFiles::from("bundle"))
+        .mount("/", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/bundle")))
 }
 
 #[cfg(not(tarpaulin_include))]

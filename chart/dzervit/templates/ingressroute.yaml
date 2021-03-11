@@ -7,9 +7,26 @@ metadata:
 spec:
   routes:
   - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host }}`)
+    match: Host(`{{ .Values.ingressroute.host }}`) || Host(`*.{{ .Values.ingressroute.host }}`)
     services:
     - kind: Service
       name: dzervit-svc
       port: 8000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: limit-inflight
+spec:
+  inFlightReq:
+    amount: 100
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: path-to-anchor
+spec:
+  replacePathRegex:
+    regex: ^/(.*)/
+    replacement: /#$1
 {{- end }}
