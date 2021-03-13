@@ -25,14 +25,14 @@
     "webpack-cli": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
-    "@babel/preset-react": "^7.12.13",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^5.1.1",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.3.1",
-    "style-loader": "^2.0.0",
-    "webpack-dev-server": "^3.11.2"
+    "@babel/core": "7.13.10",
+    "@babel/preset-env": "7.13.10",
+    "@babel/preset-react": "7.12.13",
+    "babel-loader": "8.2.2",
+    "css-loader": "5.1.1",
+    "file-loader": "6.2.0",
+    "html-webpack-plugin": "5.3.1",
+    "style-loader": "2.0.0",
+    "webpack-dev-server": "3.11.2"
   }
 }
