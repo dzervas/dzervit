@@ -11,15 +11,15 @@ class App extends Component{
 	}
 
 	componentDidMount() { (2)
-		var host = window.location.host;
+		var host = window.location.hostname;
 		var anchor = window.location.hash;
 		var subdomain = host.split(".");
 
-		if (subdomain.length > 1) {
+		if (subdomain.length >= 2) {
 			subdomain.pop(); // remove TLD
-		}
-		if (subdomain.length > 1) {
 			subdomain.pop(); // remove domain
+		} else {
+			subdomain = [];
 		}
 
 		var subdomain_text = subdomain.join(", ")
@@ -32,9 +32,6 @@ class App extends Component{
 			anchor_text = anchor.substring(1); // remove the hash symbol
 		}
 
-		// var url = new URL("/api/v1/")
-		// url.searchParams.append("target", subdomain_text)
-		// url.searchParams.append("item", anchor_text)
 		var query = new URLSearchParams({
 			target: subdomain_text,
 			item: anchor_text

@@ -14,7 +14,6 @@ spec:
           port: 8000
           middlewares:
             - limit-inflight
-            - path-to-anchor
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -23,13 +22,4 @@ metadata:
 spec:
   inFlightReq:
     amount: 100
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: path-to-anchor
-spec:
-  replacePathRegex:
-    regex: ^/(.+\.html$|.+\.js$|.+\.ico$|.+\.png$)?(.*)?
-    replacement: /$1#$2
 {{- end }}
