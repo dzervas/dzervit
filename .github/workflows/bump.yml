@@ -26,8 +26,10 @@ jobs:
 
       - name: Bump Cargo.toml version
         run: 'sed -Ei "s/(^version ?= ?)\"${{ env.LAST_VERSION }}\"/\1\"${{ env.NEW_VERSION }}\"/" Cargo.toml'
-      - name: Bump Chart.yaml version
+      - name: Bump Chart.yaml appVersion
         run: 'sed -Ei "s/(^appVersion: ?)${{ env.LAST_VERSION }}/\1${{ env.NEW_VERSION }}/" chart/dzervit/Chart.yaml'
+      - name: Bump Chart.yaml version
+        run: 'sed -Ei "s/(^version: ?)${{ env.LAST_VERSION }}/\1${{ env.NEW_VERSION }}/" chart/dzervit/Chart.yaml'
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
