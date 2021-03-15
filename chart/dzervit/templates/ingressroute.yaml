@@ -14,10 +14,10 @@ spec:
           port: 8000
           middlewares:
             - limit-inflight
-  {{ if .Values.ingressroute.certResolver }}
-    tls:
-      certResolver: {{ .Values.ingressroute.certResolver }}
-  {{ end }}
+      {{ if .Values.ingressroute.certResolver }}
+      tls:
+        certResolver: {{ .Values.ingressroute.certResolver }}
+      {{ end }}
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
