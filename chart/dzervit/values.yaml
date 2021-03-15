@@ -1,3 +1,4 @@
 ingressroute:
   enabled: true
   host: dzerv.it
+  certResolver:

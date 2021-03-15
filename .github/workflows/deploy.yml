@@ -24,6 +24,7 @@ jobs:
           values: >-
             ingressroute:
               host: dzerv.it
+              certResolver: cloudflare
           chart: 'chart/dzervit'
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG_PROD }}'
