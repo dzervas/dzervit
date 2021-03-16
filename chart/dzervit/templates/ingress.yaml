@@ -1,0 +1,28 @@
+---
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    {{ .Values.ingress.annotations | toYaml | indent 4 }}
+  name: dzervit-ingress
+  namespace: dzervit
+spec:
+  rules:
+    {{- range $host := until(.Values.ingress.hosts) -}}
+    - host: "{{ $host }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dzervit-svc
+                port:
+                  number: 8000
+    {{- end -}}
+
+  tls:
+    - hosts: {{ .Values.ingress.hosts | toJson }}
+      secretName: dzervit-cert
+{{- end }}
