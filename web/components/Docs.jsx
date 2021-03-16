@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Docs extends Component {
 	render() {
 		return (
-			<article id="docs">
+			<article>
 				<h2>Usage</h2>
 				<h3><code>https://{"{"}target{"}"}.dzerv.it/{"{"}item{"}"}</code></h3>
 				<h3>Examples:</h3>
