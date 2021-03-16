@@ -21,12 +21,12 @@ jobs:
           token: '${{ github.token }}'
           namespace: dzervit
           helm: helm3
-          values: >
-ingress:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: letsencrypt
+          values: >-
+            ingress:
+              annotations:
+                kubernetes.io/ingress.class: nginx
+                nginx.ingress.kubernetes.io/ssl-redirect: "true"
+                cert-manager.io/cluster-issuer: letsencrypt
           chart: 'chart/dzervit'
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG_PROD }}'
