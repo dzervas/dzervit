@@ -3,7 +3,7 @@
 #[macro_use]
 extern crate rocket;
 
-use rocket::{Rocket, http::{RawStr, hyper::header::Location}};
+use rocket::{Request, Rocket, http::{RawStr, hyper::header::Location}};
 use rocket_contrib::json::Json;
 use rocket_contrib::serve::StaticFiles;
 use serde::{Deserialize, Serialize};
@@ -23,12 +23,19 @@ fn v1_api(target: Option<&RawStr>, item: Option<&RawStr>) -> Json<APIv1Res> {
     })
 }
 #[derive(Responder)]
-#[response(status=303)]
+#[response(status=301)]
 struct RawRedirect((), Location);
 
-#[get("/<item>", rank = 2)]
-fn index_item(item: &RawStr) -> RawRedirect {
-    let final_path = format!("/#{}", item);
+#[catch(404)]
+fn index_item(req: &Request) -> RawRedirect {
+    let path = req.uri().path();
+    let item = path.chars().next().map(|c| &path[c.len_utf8()..]);
+
+    let final_path = match item {
+        Some(i) => format!("/#{}", i),
+        None => "/".to_string(),
+    };
+
     println!("Redirecting to {:?}", final_path);
 
     RawRedirect((), Location(final_path))
@@ -37,8 +44,8 @@ fn index_item(item: &RawStr) -> RawRedirect {
 fn rocket() -> Rocket {
     rocket::ignite()
         .mount("/api/v1/", routes![v1_api])
-        .mount("/", routes![index_item])
-        .mount("/", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/bundle")).rank(1))
+        .mount("/", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/bundle")))
+        .register(catchers![index_item])
 }
 
 #[cfg(not(tarpaulin_include))]
