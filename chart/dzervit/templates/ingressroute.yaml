@@ -7,7 +7,7 @@ metadata:
 spec:
   routes:
     - kind: Rule
-      match: Host(`{{ .Values.ingressroute.host }}`) || Host(`*.{{ .Values.ingressroute.host }}`)
+      match: Host(`{{ .Values.ingressroute.host }}`) || HostRegexp(`{subdomain:.+}.{{ .Values.ingressroute.host }}`)
       services:
         - kind: Service
           name: dzervit-svc
