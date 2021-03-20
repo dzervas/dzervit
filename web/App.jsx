@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import DZervit from './components/DZervit.jsx';
 import Docs from './components/Docs.jsx';
 
+import Favicon from './img/favicon.ico';
+import Logo from './img/logo.png';
+
 class App extends Component{
 	constructor(props) {
 		super(props);
@@ -9,6 +12,12 @@ class App extends Component{
 			text: "Loading..."
 		}
 	}
+
+	// component() {
+	// 	const logo = new Image();
+	// 	logo.src = Logo;
+	// 	document.append(logo)
+	// }
 
 	componentDidMount() { (2)
 		var host = window.location.hostname;
@@ -47,7 +56,7 @@ class App extends Component{
 			<div>
 				<header>
 					<nav>
-						<a href="https://dzerv.it"><img alt="DZervIT" src="./img/logo.png" height="70" /></a>
+						<a href="https://dzerv.it"><img alt="DZervIT" src="./logo.png" height="70" /></a>
 						<ul>
 
 							<li><a href="https://whynot.fail/tags/dzervit/" target="_blank">Press</a></li>
