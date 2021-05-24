@@ -5,7 +5,7 @@ authors = ["Dimitris Zervas <dzervas@dzervas.gr>"]
 edition = "2018"
 
 [dependencies]
-rocket = "0.4.7"
+rocket = "0.4.10"
 rocket_contrib = "0.4.7"
 serde = { version = "1.0.126", features = ["derive"] }
 
