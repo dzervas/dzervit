@@ -2,10 +2,10 @@ apiVersion: v1
 entries:
   dzervit:
   - apiVersion: v3
-    appVersion: 0.3.0
-    created: "2021-03-20T00:59:12.302879456Z"
+    appVersion: 0.3.1
+    created: "2021-06-03T13:06:14.78144831Z"
     description: SaaS to land the sickest burn on those who deserve a bad joke
-    digest: 5e03b40e58ef2a0acdb3988d46c8faf069319f6c0abc12af0bef4447fb8516b9
+    digest: 26628fb734131bf3e6499ea24934dd2caac3a082fed7365127f56b186c94eb40
     maintainers:
     - email: dzervas@dzervas.gr
       name: Dimitris Zervas
@@ -15,4 +15,4 @@ entries:
     urls:
     - https://dzervas.github.com/dzervit/dzervit-0.2.0.tgz
     version: 0.2.0
-generated: "2021-03-20T00:59:12.302365456Z"
+generated: "2021-06-03T13:06:14.780323215Z"
