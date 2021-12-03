@@ -6,12 +6,15 @@ metadata:
   name: dzervit-ingress
 spec:
   routes:
-  - kind: Rule
-    match: Host(`{{ .Values.ingressroute.host }}`) || Host(`*.{{ .Values.ingressroute.host }}`)
-    services:
-    - kind: Service
-      name: dzervit-svc
-      port: 8000
+    - kind: Rule
+      match: Host(`{{ .Values.ingressroute.host }}`) || Host(`*.{{ .Values.ingressroute.host }}`)
+      services:
+        - kind: Service
+          name: dzervit-svc
+          port: 8000
+          middlewares:
+            - limit-inflight
+            - path-to-anchor
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -27,6 +30,6 @@ metadata:
   name: path-to-anchor
 spec:
   replacePathRegex:
-    regex: ^/(.*)/
-    replacement: /#$1
+    regex: ^/(.+\.html$|.+\.js$|.+\.ico$|.+\.png$)?(.*)?
+    replacement: /$1#$2
 {{- end }}
