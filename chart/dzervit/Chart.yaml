@@ -3,8 +3,8 @@ name: dzervit
 description: SaaS to land the sickest burn on those who deserve a bad joke
 
 type: application
-version: 0.3.8
-appVersion: 0.3.8
+version: 0.3.9
+appVersion: 0.3.9
 
 maintainers:
   - name: Dimitris Zervas
