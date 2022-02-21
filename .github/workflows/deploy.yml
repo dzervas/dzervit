@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: 'Helm install'
-        uses: glopezep/helm@v1.7.1
+        uses: glopezep/helm@v1.8.0
         with:
           release: dzervit
           token: '${{ github.token }}'
