@@ -5,8 +5,13 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'New version. "major", "minor", "patch" or exact version (default: patch)'
+        type: choice
+        description: "New version bump"
         required: true
+        options:
+          - major
+          - minor
+          - patch
         default: patch
 
 jobs:
