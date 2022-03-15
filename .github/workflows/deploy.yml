@@ -12,10 +12,10 @@ jobs:
   production:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: 'Helm install'
-        uses: glopezep/helm@v1.7.1
+        uses: glopezep/helm@v1.8.0
         with:
           release: dzervit
           token: '${{ github.token }}'
