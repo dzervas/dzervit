@@ -5,7 +5,7 @@ COPY src/ ./src
 COPY Cargo.toml Cargo.lock ./
 RUN cargo build --release --target-dir .
 
-FROM node:18-slim as node-builder
+FROM node:19-slim as node-builder
 
 WORKDIR /usr/src/app
 COPY web/ ./web
