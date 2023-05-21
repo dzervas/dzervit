@@ -33,6 +33,6 @@
     "file-loader": "6.2.0",
     "html-webpack-plugin": "5.5.1",
     "style-loader": "3.3.2",
-    "webpack-dev-server": "4.13.3"
+    "webpack-dev-server": "4.15.0"
   }
 }
