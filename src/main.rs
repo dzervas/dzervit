@@ -77,7 +77,7 @@ mod tests {
             let res = v1_api(*target, *item);
             let res_json = res.into_inner();
 
-            assert!(res_json.success, format!("{:?} parameters resulted in unsuccessful responses", &param));
+            assert!(res_json.success, "{:?} parameters resulted in unsuccessful responses", &param);
             assert_eq!(res_json.text, expected.unwrap().to_string());
         }
     }
