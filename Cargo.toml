@@ -10,6 +10,6 @@ actix-web = { version = "4.3.1", features = ["rustls"] }
 serde = { version = "1.0.188", features = ["derive"] }
 
 [dev-dependencies]
-actix-rt = "2.8.0"
+actix-rt = "2.9.0"
 actix-test = { version = "0.1.1", features = ["rustls"] }
 serde_json = "1.0.105"
