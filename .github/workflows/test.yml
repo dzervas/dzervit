@@ -30,4 +30,4 @@ jobs:
           use-tool-cache: true
       - name: Generate coverage report
         if: github.ref == 'refs/heads/main'
-        run: cargo tarpaulin -v --coveralls ${{ secrets.COVERALLS_TOKEN }}
+        run: cargo tarpaulin --coveralls ${{ secrets.COVERALLS_TOKEN }}
