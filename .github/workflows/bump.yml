@@ -26,29 +26,29 @@ jobs:
 
       - name: Find last version from tag
         run: echo "LAST_VERSION=$(git describe --tags --abbrev=0 | tail -c +2 || exit 1)" >> $GITHUB_ENV
+
       - name: Find new version
-        run: echo "NEW_VERSION=$(.github/semver-increment.sh ${{ env.LAST_VERSION }} ${{ github.event.inputs.version }} || exit 1)" >> $GITHUB_ENV
+        uses: actions-ecosystem/action-bump-semver@v1
+        id: semver
+        with:
+          current_version: ${{ env.LAST_VERSION }}
+          level: ${{ github.event.inputs.level }}
 
       - name: Bump Cargo.toml version
-        run: 'sed -Ei "s/(^version ?= ?)\"${{ env.LAST_VERSION }}\"/\1\"${{ env.NEW_VERSION }}\"/" Cargo.toml'
+        run: 'sed -Ei "s/(^version ?= ?)\"${{ env.LAST_VERSION }}\"/\1\"${{ steps.semver.outputs.new_version }}\"/" Cargo.toml'
       - name: Bump Chart.yaml appVersion
-        run: 'sed -Ei "s/(^appVersion: ?)${{ env.LAST_VERSION }}/\1${{ env.NEW_VERSION }}/" chart/dzervit/Chart.yaml'
+        run: 'sed -Ei "s/(^appVersion: ?)${{ env.LAST_VERSION }}/\1${{ steps.semver.outputs.new_version }}/" chart/dzervit/Chart.yaml'
       - name: Bump Chart.yaml version
-        run: 'sed -Ei "s/(^version: ?)${{ env.LAST_VERSION }}/\1${{ env.NEW_VERSION }}/" chart/dzervit/Chart.yaml'
+        run: 'sed -Ei "s/(^version: ?)${{ env.LAST_VERSION }}/\1${{ steps.semver.outputs.new_version }}/" chart/dzervit/Chart.yaml'
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: main
-          commit_message: Bump version to ${{ env.NEW_VERSION }}
-          tagging_message: "v${{ env.NEW_VERSION }}"
-          # commit_author: Dimitris Zervas <dzervas@dzervas.gr>
-          # commit_user_name: Actions Bump
-          # commit_user_email: bump@github.com
+          commit_message: Bump version to ${{ steps.semver.outputs.new_version }}
+          tagging_message: "v${{ steps.semver.outputs.new_version }}"
 
       - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: "v${{ env.NEW_VERSION }}"
-          release_name: "v${{ env.NEW_VERSION }}"
+          tag_name: "v${{ steps.semver.outputs.new_version }}"
+          name: "v${{ steps.semver.outputs.new_version }}"

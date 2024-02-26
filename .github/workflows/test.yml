@@ -13,21 +13,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install Rust nightly toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Test project
         run: cargo test -v
 
       - name: Install Tarpaulin
-        uses: actions-rs/install@v0.1
+        uses: baptiste0928/cargo-install@v3
         if: github.ref == 'refs/heads/main'
         with:
           crate: cargo-tarpaulin
-          use-tool-cache: true
       - name: Generate coverage report
         if: github.ref == 'refs/heads/main'
         run: cargo tarpaulin --coveralls ${{ secrets.COVERALLS_TOKEN }}
