@@ -4,7 +4,7 @@ name: bump
 on:
   workflow_dispatch:
     inputs:
-      version:
+      level:
         type: choice
         description: "New version bump"
         required: true
@@ -17,11 +17,11 @@ on:
 jobs:
   bump:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
-          token: ${{ secrets.PACKAGES_PAT }}
           fetch-depth: 0
 
       - name: Find last version from tag
